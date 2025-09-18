@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device, initial-scale=1.0">
+        <title>Freissy Ivy</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+            
+            :root {
+                --color-black: #0d1117;
+                --color-cyan: #00bcd4;
+                --color-light-cyan: #33e5ff;
+                --color-text: #e6e6e6;
+            }
+
+            body {
+                font-family: 'poppins', sans-serif;
+                background-color: var(--color-black);
+                color: var(--color-text);
+                overflow: hidden;
+            }
+
+            #preloader {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: var(--color-black);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+                transition: opacity 1s ease-in-out;
+            }
+
+            #countdown {
+                font-size: 8rem;
+                font-weight: 700;
+                color: var(--color-light-cyan);
+                text-shadow: 0 0 20px var(--color-light-cyan);
+                animation: pulse 1.5s infinite;
+            }
+
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.1); }
+                100% { transform: scale(1); }
+            }
+
+            #main-content {
+                display: none;
+                opacity: 0;
+                transition: opacity 1s ease-in-out;
+            }
+
+            #main-content.visible {
+                display: block;
+                opacity: 1;
+            }
+
+            .cat-image {
+                animation: float 5s ease-in-out infinite;
+            }
+
+            @keyframes float {
+                0% { transform: translateY(0px); }
+                50% { transform: translateY(-20px); }
+                100% { transform: translateY(0px); }
+            }
+
+            .loader {
+                border: 4px solid var(--color-light-cyan);
+                border-top: 4px solid var(--color-cyan);
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                animation: spin 1s linear infinite;
+            }
+
+            @keyframes spin {
+                0% {transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+
+        </style>
+    </head>
+    <body class="bg-gray-900 text-white">
+        <audio id="background-music" loop>
+            <source src="music.mp3" type="audio/mpeg">
+        </audio>
+        <div id="preloader" class="flex flex-col justify-center items-center h-screen space-y-8">
+            <h1 class="text-4x1 sm:text-5x1 md:text-6x1 font-bold text-center text-cyan-400 drop-shadow-lg animate-fade-in-down">
+                ??Hello World??
+            </h1>
+            <div id="countdown" class="text-8x1 sm:text-9x1 font-extrabold text-cyan-300 drop-shadow-x1">10</div>
+        </div>
+        <main id="main-content" class="min-h-screen flex flex-col items-center justify-center p-6 sm:p-12">
+                <div class="w-full max-w-4x1 bg-gray-800 rounded-3x1 shadow-2x1 p-8 sm:p-12 md:p-16 text-center transform transition-all duration-500 hover:scale-105">
+                    <h1 class="text-4x1 sm:text-5x1 md:text-6x1 font-bold text-cyan-400 mb-4 animate-fade-in-up">
+                        🎉 Selamat Atas Debutnya! 🎉
+                    </h1>
+                    <p class="text-x1 sm:text-2x1 font-light text-gray-300 leading-relaxed mb-8 animate-fade-in-up delay-100">
+                        Semoga Perjalananmu sebagai vtuber dipenuhi kebahagiaan, tawa, dan kesuksesaan yang tak terhingga
+                    </p>
+                    <div class="relative w-48 h-48 sm:w-64 sm:h-64 mx-auto mb-8 animate-fade-in-up delay-200 cat-image">
+                        <svg viewBox="0 0 24 24" class="w-full h-full text-cyan-300 stroke-2" fill="currentColor">
+                            <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-4 13a1 1 0 1 1 2 0 1 1 0 0 1-2 0zm8 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0z"/>
+                            <path d="M12 18c-2 0-3-2-3-2s1-2 3-2 3 2 3 2-1 2-3 2z"/>
+                            <path d="M15 10c0-1.66-1.34-3-3-3S9 8.34 9 10H8c0-2.21 1.79-4 4-4s4 1.79 4 4z"/>
+                            <circle cx="9" cy="9" r="1.5"/>
+                            <circle cx="15" cy="9" r="1.5"/>
+                        </svg>
+                    </div>
+                </div>
+            </main>
+            <script>
+               const API_KEY = "";
+               document.addEventListener('DOMContentLoaded' , () => {
+                const preloader = document.getElementById('preloader');
+                const mainContent = document.getElementById('main-content');
+                const countdownElement = document.getElementById('countdown');
+                const generateButton = document.getElementById('generate-message');
+                const loader = document.getElementById('loader');
+                const messageContainer = document.getElementById('gemini-message-container');
+                const massageText = document.getElementById('gemini-message');
+                const music = document.getElementById('background-music');
+
+                let countdown = 10;
+
+                const interval = setInterval(() => {
+                    countdown--;
+                    countdownElement.textContent = countdown;
+
+                    if (countdown <= 0) {
+                        clearInterval(interval);
+                        preloader.style.opacity = '0';
+                        setTimeout(() => {
+                            preloader.style.display = 'none';
+                            mainContent.classList.add('visible');
+                        }, 1000);
+                    }
+                }, 1000);
+               })
+            </script>
+    </body>
+</html>
